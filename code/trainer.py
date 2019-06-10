@@ -245,7 +245,7 @@ class condGANTrainer(object):
             data_iter = iter(self.data_loader)
             step = 0
             print(self.num_batches)
-            while step < 20 : #self.num_batches :
+            while step < self.num_batches :
                 # reset requires_grad to be trainable for all Ds
                 # self.set_requires_grad_value(netsD, True)
 
@@ -319,11 +319,11 @@ class condGANTrainer(object):
                 if gen_iterations % 10 == 0: # 1000 == 0: LEE
                     backup_para = copy_G_params(netG)
                     load_params(netG, avg_param_G)
-                    self.save_img_results(netG, fixed_noise, sent_emb,
-                                          words_embs, mask, image_encoder,
-                                          captions, cap_lens,
-                                          gen_iterations, # epoch, LEE
-                                          name='average')
+                    # self.save_img_results(netG, fixed_noise, sent_emb,
+                    #                       words_embs, mask, image_encoder,
+                    #                       captions, cap_lens,
+                    #                       gen_iterations, # epoch, LEE
+                    #                       name='average')
                     load_params(netG, backup_para)
                     #
                     # self.save_img_results(netG, fixed_noise, sent_emb,
