@@ -1,3 +1,7 @@
+modified code according to pytorch version (over 0.5) and to use tensorboard by using [tensorboardX](https://github.com/lanpa/tensorboardX)
+
+---
+
 # AttnGAN
 
 Pytorch implementation for reproducing AttnGAN results in the paper [AttnGAN: Fine-Grained Text to Image Generation
