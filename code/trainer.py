@@ -316,15 +316,15 @@ class condGANTrainer(object):
                 if gen_iterations % 1 == 0: # 100 == 0: LEE
                     print('%d: '%(gen_iterations) + D_logs + '\n' + G_logs)
                 # save images
-                if gen_iterations % 10 == 0: # 1000 == 0: LEE
-                    backup_para = copy_G_params(netG)
-                    load_params(netG, avg_param_G)
+                # if gen_iterations % 10 == 0: # 1000 == 0: LEE
+                    # backup_para = copy_G_params(netG)
+                    # load_params(netG, avg_param_G)
                     # self.save_img_results(netG, fixed_noise, sent_emb,
                     #                       words_embs, mask, image_encoder,
                     #                       captions, cap_lens,
                     #                       gen_iterations, # epoch, LEE
                     #                       name='average')
-                    load_params(netG, backup_para)
+                    # load_params(netG, backup_para)
                     #
                     # self.save_img_results(netG, fixed_noise, sent_emb,
                     #                       words_embs, mask, image_encoder,
