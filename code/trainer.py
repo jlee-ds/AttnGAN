@@ -314,7 +314,7 @@ class condGANTrainer(object):
                     avg_p.mul_(0.999).add_(0.001, p.data)
 
                 if gen_iterations % 1 == 0: # 100 == 0: LEE
-                    print('%d: '%(gen_iterations) + D_logs + '\n' + G_logs)
+                    print('[%d/%d]: '%(gen_iterations, self.num_batches) + D_logs + '\n' + G_logs)
                 # save images
                 # if gen_iterations % 10 == 0: # 1000 == 0: LEE
                     # backup_para = copy_G_params(netG)
