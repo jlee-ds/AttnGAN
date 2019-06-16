@@ -183,7 +183,8 @@ def generator_loss(netsD, image_encoder, fake_imgs, real_labels,
         errG_total += g_loss
         # err_img = errG_total.data[0]
         logs += 'g_loss%d: %.2f ' % (i, g_loss.data.item()) # LEE
-        writer.add_scalar('data/g_loss_%d'%(i), g_loss.data.item(), gen_iterations)
+        if gen_iterations % 20 == 0 :
+            writer.add_scalar('data/g_loss_%d'%(i), g_loss.data.item(), gen_iterations)
 
         # Ranking loss
         if i == (numDs - 1):
@@ -202,8 +203,9 @@ def generator_loss(netsD, image_encoder, fake_imgs, real_labels,
             s_loss = (s_loss0 + s_loss1) * \
                 cfg.TRAIN.SMOOTH.LAMBDA
             # err_sent = err_sent + s_loss.data[0]
-            writer.add_scalar('data/w_loss', w_loss.data.item(), gen_iterations)
-            writer.add_scalar('data/s_loss', s_loss.data.item(), gen_iterations)
+            if gen_iterations % 20 == 0 :
+                writer.add_scalar('data/w_loss', w_loss.data.item(), gen_iterations)
+                writer.add_scalar('data/s_loss', s_loss.data.item(), gen_iterations)
             errG_total += w_loss + s_loss
             logs += 'w_loss: %.2f s_loss: %.2f ' % (w_loss.data.item(), s_loss.data.item()) # LEE
     return errG_total, logs

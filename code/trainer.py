@@ -270,9 +270,10 @@ class condGANTrainer(object):
                 ######################################################
                 noise.data.normal_(0, 1)
                 fake_imgs, _, mu, logvar = netG(noise, sent_emb, words_embs, mask)
-                for fi in range(0, len(fake_imgs)):
-                    img = fake_imgs[fi].detach().cpu()
-                    writer.add_image('image/generated_sample_%d'%(fi), img[0], gen_iterations)
+                if gen_iterations % 20 == 0 :
+                    for fi in range(0, len(fake_imgs)):
+                        img = fake_imgs[fi].detach().cpu()
+                        writer.add_image('image/generated_sample_%d'%(fi), img[0], gen_iterations)
                 #######################################################
                 # (3) Update D network
                 ######################################################
@@ -282,13 +283,15 @@ class condGANTrainer(object):
                     netsD[i].zero_grad()
                     errD = discriminator_loss(netsD[i], imgs[i], fake_imgs[i],
                                               sent_emb, real_labels, fake_labels)
-                    writer.add_scalar('data/d_loss_%d'%(i), errD.data.item(), gen_iterations)
+                    if gen_iterations % 20 == 0 :
+                        writer.add_scalar('data/d_loss_%d'%(i), errD.data.item(), gen_iterations)
                     # backward and update parameters
                     errD.backward()
                     optimizersD[i].step()
                     errD_total += errD
                     D_logs += 'errD%d: %.2f ' % (i, errD.data.item()) # LEE
-                writer.add_scalar('data/d_loss_total', errD_total.data.item(), gen_iterations)
+                if gen_iterations % 20 == 0 :
+                    writer.add_scalar('data/d_loss_total', errD_total.data.item(), gen_iterations)
                 #######################################################
                 # (4) Update G network: maximize log(D(G(z)))
                 ######################################################
@@ -305,8 +308,9 @@ class condGANTrainer(object):
                 kl_loss = KL_loss(mu, logvar)
                 errG_total += kl_loss
                 G_logs += 'kl_loss: %.2f ' % kl_loss.data.item() # LEE
-                writer.add_scalar('data/kl_loss', kl_loss.data.item(), gen_iterations)
-                writer.add_scalar('data/g_loss_total', errG_total.data.item(), gen_iterations)
+                if gen_iterations % 20 == 0 :
+                    writer.add_scalar('data/kl_loss', kl_loss.data.item(), gen_iterations)
+                    writer.add_scalar('data/g_loss_total', errG_total.data.item(), gen_iterations)
                 # backward and update parameters
                 errG_total.backward()
                 optimizerG.step()
